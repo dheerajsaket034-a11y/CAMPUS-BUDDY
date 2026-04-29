@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Buddy Welcome</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:#0f172a;
+  color:white;
+}
+
+/* 🔥 TIME LEFT SIDE */
+#clock{
+  position:absolute;
+  top:20px;
+  left:20px;   /* 👈 LEFT SIDE SHIFT */
+  padding:12px 16px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  border-radius:12px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+/* 🔥 LOGIN BUTTONS RIGHT SIDE */
+.top{
+  position:absolute;
+  top:20px;
+  right:20px;
+  display:flex;
+  gap:10px;
+}
+
+.top button{
+  padding:8px 14px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:#38bdf8;
+  color:white;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.top button:hover{
+  transform:scale(1.05);
+}
+
+/* MAIN CARD */
+.container{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.card{
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.05);
+  padding:50px;
+  border-radius:20px;
+  text-align:center;
+  max-width:500px;
+  width:90%;
+}
+
+h1{
+  font-size:2.5rem;
+  margin-bottom:10px;
+  background:linear-gradient(90deg,#4f46e5,#06b6d4);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+button.main{
+  margin-top:20px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(90deg,#4f46e5,#06b6d4);
+  color:white;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 TIME LEFT -->
+<div id="clock"></div>
+
+<!-- 🔥 LOGIN RIGHT -->
+<div class="top">
+  <button onclick="login()">Login</button>
+  <button onclick="logout()">Logout</button>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h1>Welcome To Campus Buddy</h1>
+    <p>Smart Campus Management System</p>
+    <button class="main" onclick="enterSite()">Enter</button>
+  </div>
+</div>
+
+<script>
+
+/* LOGIN SYSTEM */
+function login(){
+  let u = prompt("Username:");
+  let p = prompt("Password:");
+
+  if(u==="admin" && p==="1234"){
+    localStorage.setItem("role","admin");
+    alert("Admin Login Successful");
+  }else{
+    alert("Wrong credentials");
+  }
+}
+
+function logout(){
+  localStorage.setItem("role","user");
+  alert("Logged out");
+}
+
+function enterSite(){
+  if(!localStorage.getItem("role")){
+    localStorage.setItem("role","user");
+  }
+  window.location.href="index.html";
+}
+
+/* CLOCK */
+function updateClock(){
+  let now = new Date();
+
+  document.getElementById("clock").innerHTML =
+    "🕒 " + now.toLocaleTimeString() +
+    "<br>📅 " + now.toLocaleDateString();
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+</script>
+
+</body>
+</html>

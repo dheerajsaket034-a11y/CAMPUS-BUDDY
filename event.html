@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Events</title>
+
+<style>
+body{
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  font-family:Arial;
+}
+
+.card{
+  background:#1e293b;
+  margin:10px;
+  padding:10px;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Events</h2>
+
+<div id="adminPanel" style="display:none;">
+<input id="ename" placeholder="Event Name">
+<input id="mobile" placeholder="Mobile">
+<input id="edate" type="date">
+<input id="venue" placeholder="Venue">
+<button onclick="addEvent()">Add</button>
+</div>
+
+<div id="list"></div>
+
+<script>
+
+// 🔥 ROLE CONTROL FIX
+let role = localStorage.getItem("role");
+
+if(role === "admin"){
+  document.getElementById("adminPanel").style.display="block";
+}else{
+  document.getElementById("adminPanel").style.display="none";
+}
+
+// ADD EVENT
+function addEvent(){
+  let name=ename.value;
+  let mobile=mobile.value;
+  let date=edate.value;
+  let venue=venue.value;
+
+  let events=JSON.parse(localStorage.getItem("events"))||[];
+
+  events.push({name,mobile,date,venue});
+
+  localStorage.setItem("events",JSON.stringify(events));
+
+  load();
+}
+
+// LOAD EVENTS
+function load(){
+  let events=JSON.parse(localStorage.getItem("events"))||[];
+  let list=document.getElementById("list");
+
+  list.innerHTML="";
+
+  events.forEach(e=>{
+    list.innerHTML+=`
+      <div class="card">
+        <b>${e.name}</b><br>
+        ${e.date} | ${e.venue}
+      </div>
+    `;
+  });
+}
+
+load();
+
+</script>
+
+</body>
+</html>

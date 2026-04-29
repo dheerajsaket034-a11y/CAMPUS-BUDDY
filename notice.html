@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notice Board</title>
+
+<style>
+body{
+  font-family:Arial;
+  text-align:center;
+  background:#0f172a;
+  color:white;
+}
+
+.card{
+  background:#1e293b;
+  padding:10px;
+  margin:10px;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>📢 Notices</h2>
+
+<div id="list"></div>
+
+<script>
+function load(){
+let notices=JSON.parse(localStorage.getItem("notices"))||[];
+let list=document.getElementById("list");
+
+list.innerHTML="";
+
+notices.forEach(n=>{
+list.innerHTML+=`
+<div class="card">
+${n.text}
+</div>`;
+});
+}
+
+load();
+</script>
+
+</body>
+</html>

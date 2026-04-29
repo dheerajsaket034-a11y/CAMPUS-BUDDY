@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Campus</title>
+
+<style>
+body{
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  font-family:Arial;
+}
+
+a{
+  display:inline-block;
+  margin:10px;
+  padding:10px 20px;
+  background:#38bdf8;
+  color:white;
+  text-decoration:none;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎓 Smart Campus Helper</h1>
+
+<a href="#" onclick="openNotice()">Notice</a>
+<a href="lost.html">Lost & Found</a>
+<a href="event.html">Events</a>
+<a href="chat.html">Chatbot</a>
+
+<script>
+// ensure role
+if(!localStorage.getItem("role")){
+  localStorage.setItem("role","user");
+}
+
+// notice routing
+function openNotice(){
+  let role = localStorage.getItem("role");
+
+  if(role==="admin"){
+    window.location.href="notice-admin.html";
+  }else{
+    window.location.href="notice-user.html";
+  }
+}
+</script>
+
+</body>
+</html>

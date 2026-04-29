@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lost & Found Portal</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background: url(WhatsApp\ Image\ 2026-04-29\ at\ 7.22.27\ AM.jpeg) no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+
+    header {
+      background: rgba(255,255,255,0.85);
+      padding: 20px;
+      text-align: center;
+      color: #1a3d7c;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 2px solid #2575fc;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px;
+      gap: 40px;
+    }
+
+    .info-panel {
+      flex: 1;
+      background: rgba(255,255,255,0.85);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .form-panel {
+      flex: 1;
+      background: rgba(255,255,255,0.9);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: rgba(245,245,245,0.8);
+    }
+
+    .form-section h3 {
+      margin-top: 0;
+      color: #1a3d7c;
+      font-size: 18px;
+    }
+
+    .form-panel label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+
+    .form-panel input {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    .form-panel input:focus {
+      border-color: #2575fc;
+      box-shadow: 0 0 6px rgba(37,117,252,0.4);
+      outline: none;
+    }
+
+    .form-panel button {
+      width: 100%;
+      padding: 12px;
+      background: #2575fc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .form-panel button:hover {
+      background: #1a4bb8;
+      transform: translateY(-2px);
+    }
+
+    .list-container {
+      margin: 40px auto;
+      max-width: 800px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.9);
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
+    .card strong {
+      color: #1a3d7c;
+      font-size: 16px;
+    }
+    .card span {
+      display: block;
+      margin-top: 4px;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: rgba(255,255,255,0.85);
+      color: #1a3d7c;
+      font-size: 14px;
+      margin-top: 40px;
+      border-top: 2px solid #2575fc;
+    }
+  </style>
+</head>
+<body>
+
+  <header>🎓 Lost & Found Portal</header>
+
+  <div class="container">
+    <div class="info-panel">
+      <h2>Welcome to the Lost & Found</h2>
+      <p>Report lost items and help fellow students recover their belongings quickly. 
+      This portal is designed to keep our campus connected and organised.</p>
+    </div>
+
+    <div class="form-panel">
+
+      <!-- Personal Details Section -->
+      <div class="form-section">
+        <h3>👤 Personal Details</h3>
+        <label for="person">Name of Person:</label>
+        <input id="person" placeholder="Enter name of owner">
+
+        <label for="details">Personal Details:</label>
+        <input id="details" placeholder="e.g. Student ID, Department">
+        
+        <label for="contact">Contact:</label>
+        <input id="contact" placeholder="Enter contact info">
+      </div>
+
+      <!-- Item Details Section -->
+      <div class="form-section">
+        <h3>📦 Item Details</h3>
+        <label for="item">Item:</label>
+        <input id="item" placeholder="Enter lost item">
+
+        <label for="spec">Specification/Appearance:</label>
+        <input id="spec" placeholder="e.g. Red wallet, small size">
+
+        <label for="where">Where Lost:</label>
+        <input id="where" placeholder="e.g. Library, Classroom 204">
+
+        <label for="when">When Lost:</label>
+        <input id="when" placeholder="e.g. 18 April 2026, Afternoon">
+      </div>
+
+      <button onclick="add()">➕ Add Item</button>
+    </div>
+  </div>
+
+  <div id="list" class="list-container"></div>
+
+  <footer>© 2026 Your College Name – Student Services</footer>
+
+  <script>
+    function add(){
+      let person = document.getElementById("person").value.trim();
+      let details = document.getElementById("details").value.trim();
+      let contact = document.getElementById("contact").value.trim();
+      let item = document.getElementById("item").value.trim();
+      let spec = document.getElementById("spec").value.trim();
+      let where = document.getElementById("where").value.trim();
+      let when = document.getElementById("when").value.trim();
+
+      if(person === "" || details === "" || contact === "" || item === "" || spec === "" || where === "" || when === ""){
+        alert("Please fill in all fields!");
+        return;
+      }
+
+      let div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <strong>${item}</strong>
+        <span>👤 Owner: ${person}</span>
+        <span>📑 Details: ${details}</span>
+        <span>📝 ${spec}</span>
+        <span>📍 Lost at: ${where}</span>
+        <span>⏰ Lost on: ${when}</span>
+        <span>📞 ${contact}</span>
+      `;
+
+      document.getElementById("list").appendChild(div);
+
+      // Clear inputs
+      document.getElementById("person").value = "";
+      document.getElementById("details").value = "";
+      document.getElementById("contact").value = "";
+      document.getElementById("item").value = "";
+      document.getElementById("spec").value = "";
+      document.getElementById("where").value = "";
+      document.getElementById("when").value = "";
+    }
+  </script>
+
+</body>
+</html>

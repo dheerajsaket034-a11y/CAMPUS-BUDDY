@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Notice Panel</title>
+
+<style>
+body{
+  font-family:Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+}
+
+input, button{
+  padding:10px;
+  margin:8px;
+  border-radius:8px;
+  border:none;
+}
+
+button{
+  background:#38bdf8;
+  color:white;
+  cursor:pointer;
+}
+
+.card{
+  background:#1e293b;
+  padding:15px;
+  margin:10px auto;
+  width:60%;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+// 🔒 Admin check
+let role = localStorage.getItem("role");
+if(role !== "admin"){
+  alert("Access Denied");
+  window.location.href="index.html";
+}
+</script>
+
+<h2>🔐 Admin Notice Panel</h2>
+
+<input id="notice" placeholder="Enter Notice">
+<button onclick="addNotice()">Add</button>
+
+<div id="list"></div>
+
+<script>
+function addNotice(){
+  let text = document.getElementById("notice").value.trim();
+
+  if(text === ""){
+    alert("Enter notice!");
+    return;
+  }
+
+  let notices = JSON.parse(localStorage.getItem("notices")) || [];
+
+  notices.push({
+    text:text,
+    time:new Date().toLocaleString()
+  });
+
+  localStorage.setItem("notices", JSON.stringify(notices));
+
+  document.getElementById("notice").value="";
+  show();
+}
+
+function show(){
+  let notices = JSON.parse(localStorage.getItem("notices")) || [];
+  let list = document.getElementById("list");
+
+  list.innerHTML="";
+
+  notices.forEach((n,i)=>{
+    list.innerHTML += `
+      <div class="card">
+        <b>${n.text}</b><br>
+        <small>${n.time}</small><br><br>
+        <button onclick="del(${i})">Delete</button>
+      </div>
+    `;
+  });
+}
+
+function del(i){
+  let notices = JSON.parse(localStorage.getItem("notices"));
+  notices.splice(i,1);
+  localStorage.setItem("notices", JSON.stringify(notices));
+  show();
+}
+
+show();
+</script>
+
+</body>
+</html>
